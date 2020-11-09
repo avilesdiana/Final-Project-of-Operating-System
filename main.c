@@ -8,6 +8,25 @@
 #include <sys/stat.h>
 #include <sys/mman.h>
 
+
+
+typedef struct imageInformation {
+    int sectorSize;
+    int numberOfSectorsPerCluster;
+    int reservedSectors;
+    int numberOfCopiesofFat;
+    int numberOfEntriesRootDirectory;
+    int numberOfDiskSectors;
+    int diskSectorsSize;
+    int fatSize;
+    int volumenLabel;
+    int idSistema;
+
+  } imageInformation;
+
+
+
+
 int fd; // Archivo a leer
 int fs;
 char *map;
@@ -83,6 +102,11 @@ void abre(char *filename){
     
 }
 
+
+
+
+
+//
 int main(){
     abre("allinone.img");
 }
