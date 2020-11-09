@@ -19,6 +19,6 @@ Tabla información de la imagen, Calculo de:
     COMPILACIÓN:    ./proyectoFinal [Nombre de la imagen]
     EJEMPLO: ./proyectoFinal allinone.img
 
-al compilar ./proyectoFinal -h o ./proyectoFinal ayuda 
+al compilar ./proyectoFinal -h ó ./proyectoFinal ayuda 
 
 te imprimira esta información en el programa :D
