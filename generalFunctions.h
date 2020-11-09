@@ -8,7 +8,6 @@
 #include <sys/stat.h>
 #include <sys/mman.h>
 
-
 char *mapFile(char *filePath);
 
 int getNext(int cluster, int base);
@@ -18,3 +17,5 @@ void pruebas();
 void abre(char *filename);
 
 void validations(int valida);
+
+void cleanSystem();
