@@ -16,3 +16,5 @@ Salidas: Tabla información de la imagen, Calculo de:
 
     COMPILACIÓN:    ./proyectoFinal [Nombre de la imagen]
     EJEMPLO: ./proyectoFinal allinone.img
+
+al compilar ./proyectoFinal -h o ./proyectoFinal ayuda te imprima esta información en el programa
