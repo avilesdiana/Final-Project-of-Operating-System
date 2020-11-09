@@ -11,25 +11,26 @@
 
 
 typedef struct imageInformation {
-    int sectorSize;
+    short int *sectorSize;
     int numberOfSectorsPerCluster;
-    int reservedSectors;
+    short int *reservedSectors;
     int numberOfCopiesofFat;
-    int numberOfEntriesRootDirectory;
-    int numberOfDiskSectors;
-    int diskSectorsSize;
+    short int *numberOfEntriesRootDirectory;
+    short int *numberOfDiskSectors;
     int fatSize;
-    int volumenLabel;
-    int idSistema;
+    char *volumenLabel;
+    char *idSistema;
 
   } imageInformation;
-
 
 
 
 int fd; // Archivo a leer
 int fs;
 char *map;
+
+imageInformation archivo1;
+
 
 char *mapFile(char *filePath) {
     /* Abre archivo */
@@ -78,6 +79,12 @@ int getNext(int cluster, int base) {
 	return result;
 }
 
+void info_Image(){
+ archivo1.sectorSize=(short int *)&map[11];
+ printf("Tamaño del  sector: %d \n",archivo1.sectorSize); 
+}
+
+
 void pruebas(){
     int d;
     for(int i = 0; i <10; i++){
@@ -93,7 +100,9 @@ void abre(char *filename){
       exit(EXIT_FAILURE);
     }
 
+  
      pruebas();
+     
 
     if (munmap(map, fs) == -1) {
       perror("Error al desmapear");
@@ -108,5 +117,7 @@ void abre(char *filename){
 
 //
 int main(){
+
     abre("allinone.img");
+   
 }
