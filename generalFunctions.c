@@ -11,6 +11,8 @@ typedef struct imageInformation
   short int *fatSize;
   char volumenLabel[11];
   char idSistema[11];
+  int rootDirectoryAddress;
+  int addressImageInfoBegins;
 
 } imageInformation;
 
@@ -99,8 +101,8 @@ void abre(char *filename)
     exit(EXIT_FAILURE);
   }
 
-  pruebas();
-  //system("clear");
+  //pruebas();
+  system("clear");
   printf("\n    Tabla de información de la imagen\n");
   printf("--------------------------------------------\n\n");
   imageInfo.sectorSize = (short int *)&map[11];
@@ -130,7 +132,15 @@ void abre(char *filename)
   strcpy(imageInfo.idSistema,&map[0x36]);
   printf("Id Systema:                      %s \n ",imageInfo.idSistema);
   
-   
+  imageInfo.rootDirectoryAddress = (*imageInfo.reservedSectors + (imageInfo.numberOfCopiesofFat* *imageInfo.fatSize))* *imageInfo.sectorSize;
+  imageInfo.addressImageInfoBegins = imageInfo.rootDirectoryAddress + (*imageInfo.numberOfEntriesRootDirectory*32);
+
+  printf("\nDireccion del directorio raiz: 0x%04x\n",imageInfo.rootDirectoryAddress);
+  printf("\nDireccion donde comienza la información de archivos en la imagen: 0x%04x\n",imageInfo.addressImageInfoBegins); 
+  
+  printf("\n\t\t[Press enter to continue]\n\n");
+  getchar();
+ 
   if (munmap(map, fs) == -1)
   {
 
