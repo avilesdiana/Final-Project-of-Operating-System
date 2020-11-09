@@ -22,3 +22,5 @@ Tabla información de la imagen, Calculo de:
 al compilar ./proyectoFinal -h ó ./proyectoFinal ayuda 
 
 te imprimira esta información en el programa :D
+
+Referencias: https://www.cse.scu.edu/~tschwarz/coen252_04/Lectures/FAT.html
