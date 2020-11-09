@@ -10,7 +10,7 @@ Manuel Tijerina
 Eduardo Ramón 
 
 @Param: Archivo imagen
-@Salidas: Tabla información de la imagen, Calculo de
+@Salidas: Tabla información de la imagen, Calculo de:
     La dirección de directorio Raíz
     La dirección donde empieza la información de archivos de la imagen
 
