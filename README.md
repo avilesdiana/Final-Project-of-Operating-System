@@ -9,10 +9,10 @@ Diana Laura Aviles Elizalde
 Manuel Tijerina López
 Eduardo Ramón Pérez Sánchez
 
-Param: Archivo imagen
+Param: Archivo imagen 
 Salidas: Tabla información de la imagen, Calculo de:
-    La dirección de directorio Raíz
-    La dirección donde empieza la información de archivos de la imagen
+           -La dirección de directorio Raíz
+           -La dirección donde empieza la información de archivos de la imagen
 
     COMPILACIÓN:    ./proyectoFinal [Nombre de la imagen]
     EJEMPLO: ./proyectoFinal allinone.img
