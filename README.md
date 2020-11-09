@@ -1,5 +1,5 @@
 # Final-Project-of-Operating-System
-P R O Y E C T O    F I N A L
+Proyecto Final
 SISTEMAS OPERATIVOS
 
 Fecha de 1era Entrega: 9 Noviembre 2020
