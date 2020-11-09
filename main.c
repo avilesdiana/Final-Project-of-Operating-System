@@ -1,19 +1,23 @@
-#include "operaciones.h"
+#include "generalFunctions.h"
 
 
 int main(int argc, char *argv[]){
     char imageName[25];
+    int valida = 0;
 
    if(argc < 1){
-     printf("Faltan Argumentos \n");
+     valida = 1;
+     validations(valida);
    }
    else{
      if(argc > 2){
-       printf("Sobran argumentos \n");
+       valida = 2;
+       validations(valida);
      }
      else{
        if(strstr(argv[1], ".img") == NULL){
-        printf("Error: la extensión del archivo no es .img\n");
+        valida = 3;
+        validations(valida);
        }
        else{
           strcpy(imageName,argv[1]);

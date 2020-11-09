@@ -17,3 +17,4 @@ void pruebas();
 
 void abre(char *filename);
 
+void validations(int valida);

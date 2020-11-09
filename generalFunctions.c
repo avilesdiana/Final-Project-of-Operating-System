@@ -1,4 +1,4 @@
-#include "operaciones.h"
+#include "generalFunctions.h"
 
 typedef struct imageInformation {
     short int *sectorSize;
@@ -21,7 +21,7 @@ char *map;
 imageInformation imageInfo;
 
 
-
+//
 char *mapFile(char *filePath) {
     /* Abre archivo */
     fd = open(filePath, O_RDWR);
@@ -44,6 +44,7 @@ char *mapFile(char *filePath) {
   return map;
 }
 
+//
 int getNext(int cluster, int base) {
 	// Para FAT12
 	int offset = cluster + cluster/2;
@@ -72,7 +73,7 @@ int getNext(int cluster, int base) {
 
 
 
-
+//
 void pruebas(){
     int d;
     for(int i = 0; i <10; i++){
@@ -81,7 +82,7 @@ void pruebas(){
     }
 }
 
-
+//
 void abre(char *filename){
     map = mapFile(filename);
     if (map == NULL) {
