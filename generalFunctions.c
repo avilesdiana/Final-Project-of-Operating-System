@@ -1,5 +1,20 @@
+/*----------------------------------------------------------------------------------------------------
+  P R O Y E C T O    F I N A L
+  SISTEMAS OPERATIVOS
+  Fecha de 1era Entrega: 9 Noviembre 2020
+  Integrantes:
+  Diana Laura Aviles Elizalde
+  Manuel Tijerina
+  Eduardo Ramón 
+  @Param: Archivo imagen
+  @Salidas: Tabla información de la imagen, Calculo de
+            La dirección de directorio Raíz
+            La dirección donde empieza la información de archivos de la imagen
+  ---------------------------------------------------------------------------------------------------*/
+
 #include "generalFunctions.h"
 
+//Estructura de la tabla de información
 typedef struct imageInformation
 {
   short int *sectorSize;
@@ -22,7 +37,7 @@ char *map;
 
 imageInformation imageInfo;
 
-//
+//Función que mapea el archivo
 char *mapFile(char *filePath)
 {
   /* Abre archivo */
@@ -52,7 +67,7 @@ char *mapFile(char *filePath)
   return map;
 }
 
-//
+//Función que 
 int getNext(int cluster, int base)
 {
   // Para FAT12
@@ -81,7 +96,7 @@ int getNext(int cluster, int base)
   return result;
 }
 
-//
+// Función que 
 void pruebas()
 {
   int d;
@@ -92,7 +107,7 @@ void pruebas()
   }
 }
 
-//
+// Función que Abre el archivo e imprime su información
 void abre(char *filename)
 {
   map = mapFile(filename);
@@ -126,21 +141,21 @@ void abre(char *filename)
   imageInfo.fatSize = (short int *)&map[22];
   printf("Tamaño del FAT:                  %d \n", *imageInfo.fatSize);
 
-  strcpy(imageInfo.volumenLabel,&map[43]);
-  printf("Etiqueta del Volumen:            %s \n ",imageInfo.volumenLabel);
+  strcpy(imageInfo.volumenLabel, &map[43]);
+  printf("Etiqueta del Volumen:            %s \n ", imageInfo.volumenLabel);
 
-  strcpy(imageInfo.idSistema,&map[0x36]);
-  printf("Id Systema:                      %s \n ",imageInfo.idSistema);
-  
-  imageInfo.rootDirectoryAddress = (*imageInfo.reservedSectors + (imageInfo.numberOfCopiesofFat* *imageInfo.fatSize))* *imageInfo.sectorSize;
-  imageInfo.addressImageInfoBegins = imageInfo.rootDirectoryAddress + (*imageInfo.numberOfEntriesRootDirectory*32);
+  strcpy(imageInfo.idSistema, &map[0x36]);
+  printf("Id Systema:                      %s \n ", imageInfo.idSistema);
 
-  printf("\nDireccion del directorio raiz: 0x%04x\n",imageInfo.rootDirectoryAddress);
-  printf("\nDireccion donde comienza la información de archivos en la imagen: 0x%04x\n",imageInfo.addressImageInfoBegins); 
-  
+  imageInfo.rootDirectoryAddress = (*imageInfo.reservedSectors + (imageInfo.numberOfCopiesofFat * *imageInfo.fatSize)) * *imageInfo.sectorSize;
+  imageInfo.addressImageInfoBegins = imageInfo.rootDirectoryAddress + (*imageInfo.numberOfEntriesRootDirectory * 32);
+
+  printf("\nDireccion del directorio raiz: 0x%04x\n", imageInfo.rootDirectoryAddress);
+  printf("\nDireccion donde comienza la información de archivos en la imagen: 0x%04x\n", imageInfo.addressImageInfoBegins);
+
   printf("\n\t\t[Press enter to continue]\n\n");
   getchar();
- 
+
   if (munmap(map, fs) == -1)
   {
 
