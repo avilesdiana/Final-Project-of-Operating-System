@@ -8,28 +8,24 @@
 #include <sys/stat.h>
 #include <sys/mman.h>
 
-
-
 typedef struct imageInformation {
     short int *sectorSize;
     int numberOfSectorsPerCluster;
     short int *reservedSectors;
     int numberOfCopiesofFat;
     short int *numberOfEntriesRootDirectory;
-    short int *numberOfDiskSectors;
+    int *numberOfDiskSectors;
     int fatSize;
     char *volumenLabel;
     char *idSistema;
 
   } imageInformation;
 
-
-
 int fd; // Archivo a leer
 int fs;
 char *map;
 
-imageInformation archivo1;
+imageInformation imageInfo;
 
 
 char *mapFile(char *filePath) {
@@ -79,10 +75,8 @@ int getNext(int cluster, int base) {
 	return result;
 }
 
-void info_Image(){
- archivo1.sectorSize=(short int *)&map[11];
- printf("Tamaño del  sector: %d \n",archivo1.sectorSize); 
-}
+
+
 
 
 void pruebas(){
@@ -100,9 +94,27 @@ void abre(char *filename){
       exit(EXIT_FAILURE);
     }
 
-  
-     pruebas();
-     
+    //pruebas();
+    imageInfo.sectorSize = (short int *)&map[11];
+    printf("Tamaño del  sector: %d \n",*imageInfo.sectorSize);
+
+    
+    imageInfo.numberOfSectorsPerCluster = map[13];
+    printf("Numero de sectores por cluster: %d \n", imageInfo.numberOfSectorsPerCluster);
+
+    
+    imageInfo.reservedSectors = (short int *)&map[14];
+    printf("Sectores reservados: %d \n",*imageInfo.reservedSectors);
+
+
+    imageInfo.numberOfCopiesofFat = map[16];
+    printf("Número de copias del FAT : %d \n",imageInfo.numberOfCopiesofFat);  
+
+    imageInfo.numberOfEntriesRootDirectory = (short int *)&map[17];
+    printf("Entradas directorio Raíz: %d \n",*imageInfo.numberOfEntriesRootDirectory);
+
+    imageInfo.numberOfDiskSectors = (int *)&map[32];
+    printf("Número de sectores del disco: %d \n",*imageInfo.numberOfDiskSectors);
 
     if (munmap(map, fs) == -1) {
       perror("Error al desmapear");
@@ -111,13 +123,25 @@ void abre(char *filename){
     
 }
 
-
-
-
-
 //
-int main(){
+int main(int argc, char *argv[]){
+    char imageName[25];
 
-    abre("allinone.img");
-   
+   if(argc < 1){
+     printf("Faltan Argumentos");
+   }
+   else{
+     if(argc > 2){
+       printf("Sobran argumentos");
+     }
+     else{
+       if(strstr(argv[1], ".img") == NULL){
+        printf("Error: la extensión del archivo no es .img");
+       }
+       else{
+          strcpy(imageName,argv[1]);
+          abre(imageName);
+       }
+     }
+   }
 }
