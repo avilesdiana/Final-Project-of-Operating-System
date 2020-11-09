@@ -99,8 +99,8 @@ void abre(char *filename)
     exit(EXIT_FAILURE);
   }
 
-  //pruebas();
-  system("clear");
+  pruebas();
+  //system("clear");
   printf("\n    Tabla de información de la imagen\n");
   printf("--------------------------------------------\n\n");
   imageInfo.sectorSize = (short int *)&map[11];
