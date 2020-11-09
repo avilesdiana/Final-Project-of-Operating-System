@@ -19,3 +19,7 @@ void abre(char *filename);
 void validations(int valida);
 
 void cleanSystem();
+
+void helpA();
+
+void presentation();

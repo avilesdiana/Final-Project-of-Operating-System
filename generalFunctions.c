@@ -100,6 +100,9 @@ void abre(char *filename)
   }
 
   //pruebas();
+  system("clear");
+  printf("\n    Tabla de información de la imagen\n");
+  printf("--------------------------------------------\n\n");
   imageInfo.sectorSize = (short int *)&map[11];
   printf("Tamaño del  sector:              %d \n", *imageInfo.sectorSize);
 
@@ -110,7 +113,7 @@ void abre(char *filename)
   printf("Sectores reservados:             %d \n", *imageInfo.reservedSectors);
 
   imageInfo.numberOfCopiesofFat = map[16];
-  printf("Número de copias del FAT :       %d \n", imageInfo.numberOfCopiesofFat);
+  printf("Número de copias del FAT:        %d \n", imageInfo.numberOfCopiesofFat);
 
   imageInfo.numberOfEntriesRootDirectory = (short int *)&map[17];
   printf("Entradas directorio Raíz:        %d \n", *imageInfo.numberOfEntriesRootDirectory);
@@ -120,6 +123,13 @@ void abre(char *filename)
 
   imageInfo.fatSize = (short int *)&map[22];
   printf("Tamaño del FAT:                  %d \n", *imageInfo.fatSize);
+
+  imageInfo.volumenLabel =strcpy(imageInfo.volumenLabel,&map[43]);
+  printf("Etiqueta del Volumen:            %s \n ",*imageInfo.volumenLabel);
+
+  imageInfo.idSistema =strcpy(imageInfo.idSistema,&map[0x36]);
+  printf("Id Systema:                      %s \n ",*imageInfo.idSistema);
+  
 
   if (munmap(map, fs) == -1)
   {
