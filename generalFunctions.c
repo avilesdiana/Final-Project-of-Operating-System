@@ -96,7 +96,7 @@ int getNext(int cluster, int base)
   return result;
 }
 
-// Función que 
+/* 
 int MBR(char *base){
   int res=1;
   int i=0;
@@ -104,12 +104,13 @@ int MBR(char *base){
   if(base[510] != 0x55 && base[511] != 0xAA) res=0;
   
   while(res && i<4){
-    int p=0x1BE + i*16;
+    int p = 0x1BE + i*16;
     if(!(base[p] == 0 || base[p] == 0x80)) res=0;
     i++;
   }
   return res;
 }
+*/
 
 // Función que 
 void pruebas()
@@ -170,7 +171,49 @@ void abre(char *filename)
 
   printf("\n\t\t[Press enter to continue]\n\n");
   getchar();
-
+  
+  /*
+  if(MBR(map)){
+        attron(A_REVERSE);
+        mvprintw(4,40,"MBR");
+        attroff(A_REVERSE);
+        
+        leechar();
+        clear();
+        
+        move(4,5);
+        addstr("CHS Primera Particion");
+        int h = (unsigned char) map[0x1BE + 1];
+        mvprintw(6,5,"Head:%d\n",h);
+        int s = map[0x1BE + 2] & 0x3F;
+        int c = map[0x1BE + 2] & 0xC0;
+        c <<= 2;
+        mvprintw(8,5,"Sector:%d\n",s);
+        c |= map[0x1BE + 3];
+        mvprintw(10,5,"Cylinder:%d\n",c);
+    }
+    
+    if(MBR(map)){
+        attron(A_REVERSE);
+        mvprintw(4,40,"MBR");
+        attroff(A_REVERSE);
+        
+        leechar();
+        clear();
+        
+        move(4,5);
+        addstr("CHS Segunda Particion");
+        int h = (unsigned char) map[0x1BE + 16 + 1];
+        mvprintw(6,5,"Head:%d\n",h);
+        int s = map[0x1BE + 16 + 2] & 0x3F;
+        int c = map[0x1BE + 16 + 2] & 0xC0;
+        c <<= 2;
+        mvprintw(8,5,"Sector:%d\n",s);
+        c |= map[0x1BE + 16 + 3];
+        mvprintw(10,5,"Cylinder:%d\n",c);
+    }
+  */
+  
   if (munmap(map, fs) == -1)
   {
 
