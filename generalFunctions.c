@@ -97,6 +97,21 @@ int getNext(int cluster, int base)
 }
 
 // Función que 
+int MBR(char *base){
+  int res=1;
+  int i=0;
+  
+  if(base[510] != 0x55 && base[511] != 0xAA) res=0;
+  
+  while(res && i<4){
+    int p=0x1BE + i*16;
+    if(!(base[p] == 0 || base[p] == 0x80)) res=0;
+    i++;
+  }
+  return res;
+}
+
+// Función que 
 void pruebas()
 {
   int d;
