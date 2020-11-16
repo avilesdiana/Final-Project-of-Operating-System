@@ -96,7 +96,27 @@ int getNext(int cluster, int base)
   return result;
 }
 
-/* 
+/*
+void readCluster(int cluster, char *buffer){
+    int offset = cluster*512;
+    mempcy(buffer, &map[0x3E00+offset],512);
+}
+
+void leeArchivo(char *nombre, long tam, int cluster){
+    int fo = open(nombre, O_WRONLY | O_CREAT, 0x755);
+    char buffer[512];
+    int te;
+    do{
+        readCluster(cluster,buffer);
+        cluster = getNext(cluster,0x200);
+        te=(tam>512) ? 512 : tam;
+        write(fo,buffer,te);
+        tam -= 512;
+    }
+    while(tam>0);
+    close(fo);
+}
+
 int MBR(char *base){
   int res=1;
   int i=0;
