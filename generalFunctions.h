@@ -27,6 +27,8 @@ char *mapFile(char *filePath);
 
 int getNext(int cluster, int base);
 
+int MBR(char *base);
+
 void pruebas();
 
 void abre(char *filename);
