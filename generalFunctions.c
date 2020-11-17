@@ -192,7 +192,7 @@ void abre(char *filename)
   printf("\n\t\t[Press enter to continue]\n\n");
   getchar();
   
-  /*
+  
   if(MBR(map)){
         attron(A_REVERSE);
         mvprintw(4,40,"MBR");
@@ -232,7 +232,7 @@ void abre(char *filename)
         c |= map[0x1BE + 16 + 3];
         mvprintw(10,5,"Cylinder:%d\n",c);
     }
-  */
+  
   
   if (munmap(map, fs) == -1)
   {

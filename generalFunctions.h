@@ -27,11 +27,11 @@ char *mapFile(char *filePath);
 
 int getNext(int cluster, int base);
 
-/*void readCluster(int cluster, char *buffer);
+void readCluster(int cluster, char *buffer);
 
 void leeArchivo(char *nombre, long tam, int cluster);
 
-int MBR(char *base);*/
+int MBR(char *base);
 
 void pruebas();
 
