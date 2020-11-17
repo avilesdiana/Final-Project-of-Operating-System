@@ -96,7 +96,7 @@ int getNext(int cluster, int base)
   return result;
 }
 
-/*
+
 void readCluster(int cluster, char *buffer){
     int offset = cluster*512;
     mempcy(buffer, &map[0x3E00+offset],512);
@@ -130,7 +130,7 @@ int MBR(char *base){
   }
   return res;
 }
-*/
+
 
 // Función que 
 void pruebas()
