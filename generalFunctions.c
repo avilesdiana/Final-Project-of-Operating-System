@@ -86,6 +86,7 @@ int leeChar()
     res <<= 8;
     res |= chars[j];
   }
+}
 
   //Función que
   int getNext(int cluster, int base)
