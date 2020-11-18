@@ -259,3 +259,4 @@ void abre(char *filename)
   }
   close(fs);
 }
+//Funciono
