@@ -227,7 +227,7 @@ int leeChar()
     close(fs);
   }
   //Funciono
-  
+  /*
   int partitions(){
    int a=0, a2=0;
   if(MBR(map)){
@@ -270,4 +270,5 @@ int leeChar()
   }else{
     printf("NO ES MBS\n");
   }
+  */
 }
