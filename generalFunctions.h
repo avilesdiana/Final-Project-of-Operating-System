@@ -46,3 +46,5 @@ void helpA();
 void presentatiog();
 
 int leeChar();
+
+int partitions();
