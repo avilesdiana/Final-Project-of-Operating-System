@@ -216,48 +216,6 @@ int leeChar()
     printf("\n\t\t[Press enter to continue]\n\n");
     getchar();
 
-    if (MBR(map))
-    {
-      attron(A_REVERSE);
-      mvprintw(4, 40, "MBR");
-      attroff(A_REVERSE);
-
-      leechar();
-      clear();
-
-      move(4, 5);
-      addstr("CHS Primera Particion");
-      int h = (unsigned char)map[0x1BE + 1];
-      mvprintw(6, 5, "Head:%d\n", h);
-      int s = map[0x1BE + 2] & 0x3F;
-      int c = map[0x1BE + 2] & 0xC0;
-      c <<= 2;
-      mvprintw(8, 5, "Sector:%d\n", s);
-      c |= map[0x1BE + 3];
-      mvprintw(10, 5, "Cylinder:%d\n", c);
-    }
-
-    if (MBR(map))
-    {
-      attron(A_REVERSE);
-      mvprintw(4, 40, "MBR");
-      attroff(A_REVERSE);
-
-      leechar();
-      clear();
-
-      move(4, 5);
-      addstr("CHS Segunda Particion");
-      int h = (unsigned char)map[0x1BE + 16 + 1];
-      mvprintw(6, 5, "Head:%d\n", h);
-      int s = map[0x1BE + 16 + 2] & 0x3F;
-      int c = map[0x1BE + 16 + 2] & 0xC0;
-      c <<= 2;
-      mvprintw(8, 5, "Sector:%d\n", s);
-      c |= map[0x1BE + 16 + 3];
-      mvprintw(10, 5, "Cylinder:%d\n", c);
-    }
-
     if (munmap(map, fs) == -1)
     {
 
@@ -268,3 +226,47 @@ int leeChar()
     close(fs);
   }
   //Funciono
+  
+  int partitions(){
+   int a=0, a2=0;
+  if(MBR(map)){
+   printf("\nEs MBS\n\n");
+
+   for(int i=0; i<=3; i++)
+   {
+    int h =(byte)map[0x1BE + 1 + (i*16)];
+    if(h!=0){
+    printf("CHS Paricion %d\n", i+1);
+    printf("Head: %02x\n", h);
+    int s = map[0x1BE +  2 + (i*16)] & 0x3F;
+    int c = map[0x1BE + 2 + (i*16)] & 0xC0;
+     c<<=2;
+    printf("Sector: %02x\n", s);
+    c |= map[0x1BE + 3 + (i*16)];
+    printf("Cylinder: %02x\n",c);
+    a= ((c*255 + h)*63 +(s-1))*512;
+    printf("Partition Start: %02x\n\n", a);
+    
+    int h2 =(byte)map[a+0x1BE + 1];
+    if(h2!=0)
+    {
+    printf("Partition Extended\n");
+    printf("Head: %02x\n", h2);
+    int s2 = map[a+0x1BE + 2] & 0x3F;
+    int c2 = map[a+ 0x1BE + 2] & 0xC0;
+     c2<<=2;
+    printf("Sector: %02x\n", s2);
+    c2 |= map[a+ 0x1BE + 3];
+    printf("Cylinder: %02x\n",c2);
+    a2= ((c2*255 + h2)*63 +(s2-1))*512;
+    printf("Partition Extended Start: %02x\n\n", a2);
+    leeChar(a2);
+    }else{
+      leeChar(a);
+    }
+    }
+   }
+  }else{
+    printf("NO ES MBS\n");
+  }
+}
