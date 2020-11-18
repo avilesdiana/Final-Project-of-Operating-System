@@ -44,3 +44,5 @@ void cleanSystem();
 void helpA();
 
 void presentatiog();
+
+int leeChar();
