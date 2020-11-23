@@ -76,7 +76,27 @@ void copiaMem(char *map, int cluster, long tam, int inicio, int size){
    return res;
   }
   
-  //void leeInfo()
+  void leeInfo(char *map){
+    clear();
+    move(4,5);
+    addstr("Informacion de Disco");
+    short int *ss = (short int*)&map[11];
+    mvprintw(6, 5, "Tamaño sector:%d\n", *ss);
+    short int *sr = (short int*)&map[14];
+    mvprintw(8, 5, "Sectores reservados:%d\n", *sr);
+    short int *re = (short int*)&map[17];
+    mvprintw(10, 5, "Entradas directorio:%d\n", *re);
+    short int *tf = (short int*)&map[22];
+    mvprintw(12, 5, "Tamaño FAT:%d\n", *tf);
+    
+    //De 4B
+    int *ns=(int*)&map[32];
+    mvprintw(14,5,"Numero de Sectores:%d\n",*ns);
+    
+    //De 1B
+    int spc = map[13];
+    mvprintw(16,5,"Numero de sectores por cluster:%d\n",spc);
+  }
 
   void leeDirectorio(int d){
     clear();
@@ -107,5 +127,22 @@ void copiaMem(char *map, int cluster, long tam, int inicio, int size){
   }
   
   //void pruebas
-  //int abre
+
+  int abre(char *filename){
+    long fs;
+    //Lee archivo
+    char *map = mapFile(filename, &fs);
+    if(map == NULL){
+      exit(EXIT_FAILURE);
+    }
+    
+    pruebas();
+    
+    if(munmap(map,fd) == -1){
+      perror("Error al desmapear");
+    }
+    close(fd);
+    return 0;
+  }
+
   //int main
