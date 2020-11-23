@@ -56,7 +56,26 @@ int getNext32(int cluster, int base){
   return result;
 }
 
-void lee directorio(){
+void readCluster(int cluster, char *buffer, int inicio, int size){
+  int offset = cluster * size * 512;
+  memcpy(buffer,&map[inicio+offset],size*512);
+}
+
+//void leeArchivo(char *nombre, long tam, int cluster)
+//void leeArchivo2(char *nombre, long tam, int cluster)
+
+void copiaMem(char *map, int cluster, long tam, int inicio, int size){
+  do{
+    readCluster(cluster, map, inicio, size);
+    cluster=getNext(cluster, 0x200);
+    tam-=512;
+    map+=512;
+  } while (tam>0);
+ 
+//void copiaMem16(char *map, int cluster, long tam, int inicio, int size)
+//void copiaMem32(char *map, int cluster, long tam, int inicio, int size)
+
+  void lee directorio(){
   unsigned tam;
   mvprintw(4,5,"Nombre");
   mvprintw(4,20,"Tipo");
