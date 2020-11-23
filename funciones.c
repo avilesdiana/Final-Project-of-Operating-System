@@ -126,7 +126,14 @@ void copiaMem(char *map, int cluster, long tam, int inicio, int size){
     i++;
   }
   
-  //void pruebas
+  void pruebas(){
+    int d;
+    d=leeChar();
+    
+    if(d=='1'){
+      leeInfo(map);
+    }
+  }
 
   int abre(char *filename){
     long fs;
