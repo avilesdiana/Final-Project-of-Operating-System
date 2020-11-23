@@ -1,24 +1,9 @@
-int MBR(char *base){
-  int res = 1; //asumimos verdad
-  int i=0;  
-  //checa firma
-  if(base[510] != 0x55 && base[511] != 0xAA) res=0;
-  
-  //Checa que las particiones sean validas
-  while(res && i<4){
-    int p = 0x1BE + i*16;
-    if(!(base[p] == 0 || base[p] == 0x80)) res=0;
-    i++
-    }
-   return res;
-  }
-
-//int leeChar
+//int leeChar();
 
 int getNext(int cluster, int base){
   //Para FAT12
   int offset=cluster+cluster/2;
-  int flag=cluster; 
+  int flag=cluster % 2; 
   
   unsigned char b1, b2;
   b1=map[base + offset];
@@ -75,15 +60,34 @@ void copiaMem(char *map, int cluster, long tam, int inicio, int size){
 //void copiaMem16(char *map, int cluster, long tam, int inicio, int size)
 //void copiaMem32(char *map, int cluster, long tam, int inicio, int size)
 
-  void lee directorio(){
-  unsigned tam;
-  mvprintw(4,5,"Nombre");
-  mvprintw(4,20,"Tipo");
-  mvprintw(4,5,"Cluster");
-  mvprintw(4,5,"Tamaño");
-  int i=0, j;
-  while(i<25 && dir[i*32] != 0){
-    j=0;
+  int MBR(char *base){
+  int res = 1; //asumimos verdad
+  int i=0;  
+  //checa firma
+  if(base[510] != 0x55 && base[511] != 0xAA) res=0;
+  
+  //Checa que las particiones sean validas
+  while(res && i<4){
+    int p = 0x1BE + i*16;
+    if(!(base[p] == 0 || base[p] == 0x80)) res=0;
+    i++
+    }
+   return res;
+  }
+  
+  //void leeInfo()
+
+  void leeDirectorio(int d){
+    char nombre;
+    int tipo;
+    int cluster;
+    unsigned int tam;
+    mvprintw(4,5,"Nombre");
+    mvprintw(4,20,"Tipo");
+    mvprintw(4,5,"Cluster");
+    mvprintw(4,5,"Tamaño");
+    int i=0, j;
+    while(i<25 && dir[i*32] != 0) j=0;
     strncpy(nombre, &dir[i*32],13);
     while(nombre[j] != ' ' && j<8) j++;
     strncpy (&nombre[j+1],&dir[8 + i*32],3);
@@ -100,3 +104,5 @@ void copiaMem(char *map, int cluster, long tam, int inicio, int size){
   }
   
   //void pruebas
+  //int abre
+  //int main
