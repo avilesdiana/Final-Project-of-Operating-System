@@ -96,6 +96,9 @@ void copiaMem(char *map, int cluster, long tam, int inicio, int size){
     //De 1B
     int spc = map[13];
     mvprintw(16,5,"Numero de sectores por cluster:%d\n",spc);
+    //...
+    //...
+    //...
   }
 
   void leeDirectorio(int d){
@@ -132,6 +135,9 @@ void copiaMem(char *map, int cluster, long tam, int inicio, int size){
     
     if(d=='1'){
       leeInfo(map);
+      //...
+      //...
+      //...
     }
   }
 
