@@ -56,6 +56,7 @@ void copiaMem(char *map, int cluster, long tam, int inicio, int size){
     tam-=512;
     map+=512;
   } while (tam>0);
+}
  
 //void copiaMem16(char *map, int cluster, long tam, int inicio, int size)
 //void copiaMem32(char *map, int cluster, long tam, int inicio, int size)
