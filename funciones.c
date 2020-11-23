@@ -79,7 +79,9 @@ void copiaMem(char *map, int cluster, long tam, int inicio, int size){
   //void leeInfo()
 
   void leeDirectorio(int d){
-    char nombre;
+    clear();
+    char *dir = &map[d];
+    char nombre[14];
     int tipo;
     int cluster;
     unsigned int tam;
