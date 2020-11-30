@@ -130,17 +130,21 @@ void copiaMem16(char *map, int cluster, long tam, int inicio, int size){
 //void copiaMem32(char *map, int cluster, long tam, int inicio, int size)
 
   int MBR(char *base){
-  int res = 1; //asumimos verdad
-  int i=0;  
-  //checa firma
-  if(base[510] != 0x55 && base[511] != 0xAA) res=0;
+    int res = 1; //asumimos verdad
+    int i=0;  
+    
+    //checa firma
+    if(base[510] != 0x55 && base[511] != 0xAA) res=0;
   
-  //Checa que las particiones sean validas
-  while(res && i<4){
-    int p = 0x1BE + i*16;
-    if(!(base[p] == 0 || base[p] == 0x80)) res=0;
-    i++
-    }
+    //Checa que haya al menos una partición
+    if(res && base[0x1BF]==0 && base[0x1C0]==0 && base[0x1C1]==0) res=0;
+    
+    //Checa que las particiones sean validas
+    while(res && i<4){
+      int p = 0x1BE + i*16;
+      if(!(base[p] == 0 || base[p] == 0x80)) res=0;
+      i++
+      }
    return res;
   }
   
@@ -204,7 +208,7 @@ void copiaMem16(char *map, int cluster, long tam, int inicio, int size){
         mvprintw(5+i,25,"%d",s);
         c |= map[0x1BE + i*16 + 3];
         mvprintw(5+i,15,"%d",c);
-        int sec=((c*255 + h)*63 +(s-1))*512;
+        int sec=(c*255 + h)*63 +(s-1);
         mvprintw(5+i,30,"%d",sec);
       }
     }
