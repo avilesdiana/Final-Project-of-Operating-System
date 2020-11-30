@@ -183,9 +183,9 @@ void copiaMem16(char *map, int cluster, long tam, int inicio, int size){
     mvprintw(22,5,"Etiqueta:%s\n",label);
     
     //Cuentas
-    int draiz=((*sr)+nfat*(*tf))*(*ss);
+    int draiz=((*sr)+nfat*(*tf))*(*ss); //no esta terminado
     mvprintw(24,5,"Directorio raiz 0x%x\n",draiz);
-    int inicio=((*sr)+nfat*(*tf))*(*ss);
+    int inicio=((*sr)+nfat*(*tf))*(*ss); //no esta terminado
     mvprintw(26,5,"Inicio de datos 0x%x\n",inicio);
     
     //Es MBR
