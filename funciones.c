@@ -245,9 +245,21 @@ void copiaMem16(char *map, int cluster, long tam, int inicio, int size){
       leeInfo(map);
       leeChar();
       leeDirectorio(0x2600);
-      //...
-      //...
-      //...
+      leeChar();
+      char *archmem=malloc(1024);
+      copiaMem(archmem,3,830,0x3E00,1);
+      edita(archmem,830);
+    }else{
+      leeInfo(map);
+      leeChar();
+      leeInfo(&map[0x100000]);
+      leeChar();
+      leeDirectorio(0x141000);
+      leeChar();
+      map=&map[0x100000];
+      char *archmem=malloc(4096);
+      copiaMem16(archmem,2,302,0x44000,8);
+      edita(archmem,302);
     }
   }
 
