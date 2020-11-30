@@ -198,10 +198,16 @@ void copiaMem16(char *map, int cluster, long tam, int inicio, int size){
       for(int i=0;i<4;i++){
         int h=(byte)map[0x1BE + i*16];
         mvprintw(5+i,20,"%d",h);
-    //...
-    //...
-    //...
-  }
+        int s=map[0x1BE + i*16 + 2] & 0x3F;
+        int c=map[0x1BE + i*16 + 2] & 0xC0;
+        c<<=2;
+        mvprintw(5+i,25,"%d",s);
+        c |= map[0x1BE + i*16 + 3];
+        mvprintw(5+i,15,"%d",c);
+        int sec=((c*255 + h)*63 +(s-1))*512;
+        mvprintw(5+i,30,"%d",sec);
+      }
+    }
 
   void leeDirectorio(int d){
     clear();
@@ -237,6 +243,8 @@ void copiaMem16(char *map, int cluster, long tam, int inicio, int size){
     
     if(d=='1'){
       leeInfo(map);
+      leeChar();
+      leeDirectorio(0x2600);
       //...
       //...
       //...
