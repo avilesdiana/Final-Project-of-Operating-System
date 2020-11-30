@@ -1,4 +1,39 @@
-//int leeChar();
+char* mapFile(char *filePath, long *fs){
+  fd=open(filePath, O_RDONLY);
+  if(fd==-1){
+    perror("Error abriendo el archivo");
+    return (NULL);
+  }
+  struct stat st;
+  fstat(fd, &st);
+  *fs = st.st_size;
+  
+  map=mmap(0, *fs, PROT_READ, MAP_SHARED);
+  if(map==MAP_FAILED){
+    close(fd);
+    perror("Error mapeando el archivo");
+    return (NULL);
+  }
+  return map;
+}
+
+int leeChar(){
+  int chars[5];
+  int ch, i=0;
+  nodelay(stdscr, TRUE);
+  while((ch=getch())==ERR)
+    ;
+  ungetch(ch);
+  while((ch=getch())!=ERR){
+    chars[i++]=ch;
+  }
+  int res=0;
+  for(int j=0;j<i;j++){
+    res <<=8;
+    res |= chars[j];
+  }
+  return res;
+}
 
 int getNext(int cluster, int base){
   //Para FAT12
@@ -46,8 +81,33 @@ void readCluster(int cluster, char *buffer, int inicio, int size){
   memcpy(buffer,&map[inicio+offset],size*512);
 }
 
-//void leeArchivo(char *nombre, long tam, int cluster)
-//void leeArchivo2(char *nombre, long tam, int cluster)
+void leeArchivo(char *nombre, long tam, int cluster){
+  int fo=open(nombre, O_WRONLY | O_CREA...); //no esta terminado
+  char buffer[512];
+  int te;
+  do{
+    readCluster(cluster, buffer, 0x3E00);
+    cluster=getNext(cluster,0x200);
+    te=(tam>512) ? 512 : tam;
+    write(fo, buffer, te);
+    tam -= 512;
+  } while (tam>0);
+  close (fo);
+}
+
+void leeArchivo2(char *nombre, long tam, int cluster){
+int fo=open(nombre, O_WRONLY | O_CREA...); //no esta terminado
+  char buffer[512];
+  int te;
+  do{
+    readCluster(cluster, buffer, 0x3E00);
+    cluster=getNext(cluster,0x200);
+    te=(tam>512) ? 512 : tam;
+    write(fo, buffer, te);
+    tam -= 512;
+  } while (tam>0);
+  close (fo);
+}
 
 void copiaMem(char *map, int cluster, long tam, int inicio, int size){
   do{
@@ -58,7 +118,15 @@ void copiaMem(char *map, int cluster, long tam, int inicio, int size){
   } while (tam>0);
 }
  
-//void copiaMem16(char *map, int cluster, long tam, int inicio, int size)
+void copiaMem16(char *map, int cluster, long tam, int inicio, int size){
+  do{
+    readCluster(cluster, map, inicio, size);
+    cluster=getNext16(cluster,0x1000);
+    tam-=512;
+    map+=512;
+  } while (tam>0);
+}
+
 //void copiaMem32(char *map, int cluster, long tam, int inicio, int size)
 
   int MBR(char *base){
@@ -96,6 +164,40 @@ void copiaMem(char *map, int cluster, long tam, int inicio, int size){
     //De 1B
     int spc = map[13];
     mvprintw(16,5,"Numero de sectores por cluster:%d\n",spc);
+    int nfat = map[16];
+    mvprintw(18,5,"Numero de FAT:%d\n",nfat);
+    
+    //Cadenas
+    char ID[9];
+    char label[11];
+    
+    strncpy(ID, &map[54],9);
+    ID[5]=0;
+    strncpy(label, &map[43],10);
+    label[11]=0;
+    mvprintw(20,5,"ID:%s\n",ID);
+    mvprintw(22,5,"Etiqueta:%s\n",label);
+    
+    //Cuentas
+    int draiz=((*sr)+nfat*(*tf))*(*ss);
+    mvprintw(24,5,"Directorio raiz 0x%x\n",draiz);
+    int inicio=((*sr)+nfat*(*tf))*(*ss);
+    mvprintw(26,5,"Inicio de datos 0x%x\n",inicio);
+    
+    //Es MBR
+    if(MBR(map)){
+      attron(A_REVERSE);
+      mvprintw(4,40,"Es MBR");
+      attrof(A_REVERSE);
+      
+      leeChar();
+      clear();
+      
+      move(4,5);
+      addstr("Partición C  H  S Sector");
+      for(int i=0;i<4;i++){
+        int h=(byte)map[0x1BE + i*16];
+        mvprintw(5+i,20,"%d",h);
     //...
     //...
     //...
