@@ -178,7 +178,9 @@ int MBR(char *base){
     
     while(res && i<4){
         int p = 0x1BE + i*16;
-        if(!(base[p] == 0 || base[p] == 0x80)) res=0;
+        if(!(base[p] == 0 || base[p] == 0x80)) {
+          res=0;
+        }
         i++;
     }
     return res;
