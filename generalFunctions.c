@@ -281,8 +281,6 @@ void leeDirectorio(int d){
     i++;
 }
 
-extern int edita(char *map, long fs);
-
 // Función que
 void pruebas(){
     int d;
