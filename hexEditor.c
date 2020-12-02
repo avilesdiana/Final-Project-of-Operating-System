@@ -37,29 +37,9 @@ char *hazLinea(char *base, int dir) {
     return(strdup(linea));
 }
 
-char *mapFile(char *filePath) {
-    /* Abre archivo */
-    fd = open(filePath, O_RDWR);
-    if (fd == -1) {
-        perror("Error abriendo el archivo");
-        return(NULL);
-    }
+extern char *mapFile(char *filePath, long *fs);
 
-    /* Mapea archivo */
-    struct stat st;
-    fstat(fd,&st);
-    fs = st.st_size;
-
-    char *map = mmap(0, fs+200, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-    if (map == MAP_FAILED) {
-        close(fd);
-        perror("Error mapeando el archivo");
-        return(NULL);
-    }
-  return map;
-}
-
-extern int leeChar(void);
+extern int leeChar();
 
 void pantalla(char *map, int base){
     for(int i= 0; i<25; i++) {
