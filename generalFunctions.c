@@ -237,7 +237,7 @@ void leeInfo(char *map){
          move(4,5);
          addstr("Partición C  H  S Sector");
          for(int i=0;i<4;i++){
-           int h=(byte)map[0x1BE + i*16];
+           int h=(unsigned char)map[0x1BE + i*16];
            mvprintw(5+i,20,"%d",h);
            int s=map[0x1BE + i*16 + 2] & 0x3F;
            int c=map[0x1BE + i*16 + 2] & 0xC0;
