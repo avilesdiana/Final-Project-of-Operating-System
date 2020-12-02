@@ -23,19 +23,35 @@
 #include <sys/stat.h>
 #include <sys/mman.h>
 
-char *mapFile(char *filePath);
+char *mapFile(char *filePath, long *fs);
+
+int leeChar();
 
 int getNext(int cluster, int base);
 
-void readCluster(int cluster, char *buffer);
+int getNext16(int cluster, int base);
+
+int getNext32(int cluster, int base);
+
+void readCluster(int cluster, char *buffer, int inicio, int size);
 
 void leeArchivo(char *nombre, long tam, int cluster);
 
+void copiaMem(char *map, int cluster, long tam, int inicio, int size);
+
+void copiaMem16(char *map, int cluster, long tam, int inicio, int size);
+
 int MBR(char *base);
+
+void leeInfo(char *map);
+
+void leeDirectorio(int d);
+
+extern int edita(char *map, long fs);
 
 void pruebas();
 
-void abre(char *filename);
+int abre(char *filename);
 
 void validations(int valida);
 
@@ -44,7 +60,3 @@ void cleanSystem();
 void helpA();
 
 void presentatiog();
-
-int leeChar();
-
-int partitions();
